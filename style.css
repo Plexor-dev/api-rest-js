@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.cat {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+img {
+    width: 230px;
+    height: 200px;
+    background-size: contain;
+}
+
+button {
+    border-radius: 50px;
+    margin: 10px;
+    padding: 10px;
+    background-color: greenyellow;
+    font-weight: bold;
+    color: black;
+}

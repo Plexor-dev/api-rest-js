@@ -1,0 +1,118 @@
+:root {
+    --green-dark: #A2B38B;
+    --green-light: #FAFDD6;
+    --orange-l: #E6BA95;
+    --black-l: #4a4a4a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    animation: appear 5s ease 1;
+}
+@keyframes appear {
+    from {
+        transform: scale(2);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+h2 {
+    margin-left: 15px;
+}
+
+
+.box-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    }
+
+
+article {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    place-self: center;
+    border-radius: 50px;
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--green-light);
+    font-weight: bold;
+    color: var(--black-l);
+    width: 50%;
+    transition: transform 0.5s;
+    transform: scale(1);
+}
+
+button:hover {
+    transform: scale(1.3);
+    transition: transform 0.5s;
+}
+
+img {
+    display: block;
+    background-color: gray;
+    border-radius: 30px;
+    width: 330px;
+    height: 300px;
+    transform: translateY(0px);
+    transition: transform 2s;
+}
+img:hover {
+    transform: translateY(-20px);
+    transition: transform 2s;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my-btn {
+    color: black;
+    width: 20%;
+    font-size: 2rem;
+    background-color: var(--green-dark);
+}
+
+.btn-delete {
+    color: black;
+    width: 20%;
+    font-size: 1.3rem;
+    background-color: var(--green-dark);
+    margin: 15px;
+}
+
+.favorite__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.favorite__img {
+    width: 330px;
+    height: 300px;
+}
