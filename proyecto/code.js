@@ -1,20 +1,158 @@
-const URL = 'https://api.thecatapi.com/v1/images/search?limit=3&api_key=80a8df1a-4bd2-4ba5-87ad-0dfde904b3d1';
+const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2&api_key=80a8df1a-4bd2-4ba5-87ad-0dfde904b3d1';
+const API_URL_FAVOURITES = 'https://api.thecatapi.com/v1/favourites?api_key=80a8df1a-4bd2-4ba5-87ad-0dfde904b3d1';
+const API_URL_FAVOURITES_DELETE = id => `https://api.thecatapi.com/v1/favourites/${id}?api_key=80a8df1a-4bd2-4ba5-87ad-0dfde904b3d1`;
+
+
+const spanError = document.getElementById('error');
+
+
+
+//? GETTING DATA FROM API
 
 async function randomCat() {
-    const res = await fetch(URL);
+
+    try {
+    const res = await fetch(API_URL_RANDOM);
     const data = await res.json();
 
-    const img1 = document.getElementById('img1');
-    const img2 = document.getElementById('img2');
-    const img3 = document.getElementById('img3');
+    const status = res.status;
 
-    img1.src = data[0].url;
-    img2.src = data[1].url;
-    img3.src = data[2].url;
+    if(status !== 200) {
+
+        console.error(`Error ${status}`);
+        spanError.innerHTML = `Error ${status} ${data.message}`;
+
+    } else {
+
+        const img1 = document.getElementById('img1');
+        const img2 = document.getElementById('img2');
+        const btn1 = document.getElementById('btn1');
+        const btn2 = document.getElementById('btn2');
+        //const img3 = document.getElementById('img3');
+    
+        img1.src = data[0].url;
+        img2.src = data[1].url;
+        //img3.src = data[2].url;8
+        // console.log(data);
+
+
+        btn1.onclick = (id) => saveFavouriteCat(data[0].id);
+
+        btn2.onclick = (id) => saveFavouriteCat(data[1].id);
+
+    }
+    } catch {
+        console.error('Error ');
+    }
+
+    
+
 }
 
 
+
+//*LOAD FAVOURITES
+
+async function loadFavouriteCat() {
+    const res = await fetch(API_URL_FAVOURITES);
+    const data = await res.json();
+
+    console.log('Favourite ');
+    console.log(data);
+
+    if(res.status !== 200) {
+
+        console.error(`Error ${res.status} ${data.message}`);
+        spanError.innerHTML = `Error ${res.status} ${data.message}`;
+
+    } else {
+        const sectionDiv = document.getElementById('favoriteCat')
+        sectionDiv.innerHTML = '';
+        data.forEach(cat => { 
+            const article = document.createElement('article');
+            const img = document.createElement('img');
+            const btn = document.createElement('button');
+            const btnText = document.createTextNode('Delete');
+
+            
+            img.src = cat.image.url;
+            btn.appendChild(btnText);
+            // btn.addEventListener("click", deleteFavouriteCat(cat.id));
+            btn.onclick = () => deleteFavouriteCat(cat.id);
+            article.appendChild(img);
+            article.appendChild(btn);
+            sectionDiv.appendChild(article);
+
+            
+            // cat.image_url
+
+            
+        });
+    }
+}
+
+
+
+
+//*POST
+
+async function saveFavouriteCat(id) {
+    const res = await fetch(API_URL_FAVOURITES, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            image_id: id
+    }),
+});
+
+    console.log('post ');
+    console.log(res);
+
+    const data = await res.json();
+
+    if(res.status !== 200) {
+        console.error(`Error ${res.status} ${data.message}`);
+        spanError.innerHTML = `Error ${res.status} ${data.message}`;
+    } else {
+        console.log('Se guardo el gatito');
+        loadFavouriteCat();
+    }
+}
+
+
+
+
+
+
+//!DELETE
+
+async function deleteFavouriteCat(id) {
+    const res = await fetch(API_URL_FAVOURITES_DELETE(id), {
+        method: 'DELETE',
+});
+
+
+    const data = await res.json();
+
+    if(res.status !== 200) {
+
+        console.error(`Error ${res.status} ${data.message}`);
+        spanError.innerHTML = `Error ${res.status} ${data.message}`;
+
+    } else {
+        console.log('Se elimino el gatito');
+        loadFavouriteCat();
+    }
+}
+
+
+
+
+
 randomCat();
+loadFavouriteCat();
 
 const myButton = document.querySelector('#my-btn');
 myButton.addEventListener('click', randomCat);
