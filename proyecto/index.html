@@ -42,12 +42,22 @@
         </div>
     </section>
 
+    <section id="uploadingCat" class="section__uploading-cat">
+        <h2>Upload your cat</h2>
+        <form action="" id="uploadingForm">
+            <input type="file" id="file"name="file" onchange="miniatura()">
+            <button type="button" onclick="uploadCatImage()">Upload image</button>
+        </form>
+    </section>
+
     <section class="catFavoriteApi">
         <h2>Favorite Cat</h2>
         <div id="favoriteCat" class="cat-div">
             <!-- Api de gatos favoritos, images & button delete -->
         </div>
     </section>
+
+
 
 
     <script src="code.js"></script>

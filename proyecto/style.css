@@ -59,10 +59,11 @@ article {
     flex-direction: column;
 }
 
-button {
+input, button {
     display: inline-block;
     place-self: center;
     border-radius: 50px;
+    border: 1px solid rgba(100, 90, 90, 0.37);
     margin: 10px;
     padding: 10px;
     background-color: var(--green-light);
@@ -80,6 +81,7 @@ button:hover {
 img {
     display: block;
     background-color: gray;
+    background-size: cover;
     border-radius: 30px;
     width: 180px;
     height: 150px;
@@ -117,6 +119,7 @@ img:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
 }
 
 .favorite__img {
@@ -150,3 +153,20 @@ img:hover {
     gap: 10px;
 }
 /*imagenes*/
+
+
+
+
+.section__uploading-cat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.preview-class {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}

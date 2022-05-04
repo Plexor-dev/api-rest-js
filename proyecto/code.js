@@ -1,6 +1,7 @@
 const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2';
 const API_URL_FAVOURITES = 'https://api.thecatapi.com/v1/favourites';
 const API_URL_FAVOURITES_DELETE = id => `https://api.thecatapi.com/v1/favourites/${id}`;
+const API_URL_UPLOAD = 'https://api.thecatapi.com/v1/images/upload';
 
 
 const spanError = document.getElementById('error');
@@ -154,6 +155,66 @@ async function deleteFavouriteCat(id) {
         loadFavouriteCat();
     }
 }
+
+async function uploadCatImage() {
+    const form = document.getElementById('uploadingForm');
+    const formData = new FormData(form);
+
+
+
+    console.log(formData.get('file'));
+
+    const res = await fetch(API_URL_UPLOAD, {
+        method: 'POST',
+        headers: {
+            // 'Content-Type': 'multipart/form-data',
+            'X-API-KEY': '80a8df1a-4bd2-4ba5-87ad-0dfde904b3d1'
+    },
+    body: formData,
+    });
+
+    const data = await res.json();
+
+
+    if(res.status !== 201) {
+        console.error(`Error ${res.status} ${data.message}`);
+        spanError.innerHTML = `Error ${res.status} ${data.message}`;
+    } else {
+        console.log('Se subio el gatito');
+        console.log({data});
+        console.log(data.url);
+
+
+        
+        saveFavouriteCat(data.id);
+    }
+    }
+
+    function miniatura() {
+        const form = document.getElementById('uploadingForm')
+        const formData = new FormData(form)
+        //usamos el FileReader para sacar la información del archivo del formData
+        const reader = new FileReader();
+    
+    //Este código es para borrar la miniatura anterior al actualizar el form.
+        if (form.children.length === 3) {
+            const preview = document.getElementById("preview")
+            form.removeChild(preview)
+        }
+    //aquí sucede la magia, el reader lee los datos del form.
+        reader.readAsDataURL(formData.get('file'))
+    
+    //Éste código es para cuando termine de leer la info de la form, cree una imagen miniatura de lo que leyó el form.
+        reader.onload = () => {
+            const previewImage = document.createElement('img')
+            previewImage.id = "preview"
+            previewImage.className = "preview-class"
+            previewImage.width = 50
+            previewImage.src = reader.result
+            form.appendChild(previewImage);
+        }
+    
+    }
 
 
 
