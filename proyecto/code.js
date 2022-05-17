@@ -177,7 +177,7 @@ async function uploadCatImage() {
     const res = await fetch(API_URL_UPLOAD, {
         method: 'POST',
         headers: {
-            // 'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'multipart/form-data', //en este caso no es necesario indicarlo
             'X-API-KEY': '80a8df1a-4bd2-4ba5-87ad-0dfde904b3d1'
     },
     body: formData,
